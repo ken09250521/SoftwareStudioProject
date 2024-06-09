@@ -1,11 +1,17 @@
 library event_calendar;
 
 import 'dart:math';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'bottom_bar.dart';
 import 'theme_setting_page.dart';
+import 'add_task.dart';
+import 'theme_setting_page.dart';
+import 'start_page.dart';
+
 
 
 part 'color-picker.dart';
@@ -14,15 +20,20 @@ part 'timezone-picker.dart';
 
 part 'appointment-editor.dart';
 
-final List<Widget> _pages = <Widget>[
-    EventCalendar(),
-    ThemePage(),
-];
-
-void main() => runApp(const MaterialApp(
-      home: EventCalendar(),
-      debugShowCheckedModeBanner: false,
-    ));
+void main() => runApp(
+  ChangeNotifierProvider(
+    create: (context) => ThemeModel(),
+    child: Consumer<ThemeModel>(
+      builder: (context, themeModel, child) {
+        return MaterialApp(
+          
+          theme: themeModel.currentTheme,
+          home: const StartPage(),
+        );
+      }
+    ),
+  )
+);
 
 //ignore: must_be_immutable
 class EventCalendar extends StatefulWidget {
@@ -46,7 +57,6 @@ late TimeOfDay _endTime;
 bool _isAllDay = false;
 String _subject = '';
 String _notes = '';
-int _selectedIdx = 1;
 
 class EventCalendarState extends State<EventCalendar> {
   EventCalendarState();
@@ -66,14 +76,39 @@ class EventCalendarState extends State<EventCalendar> {
     super.initState();
   }
 
+  void _addObject(BuildContext context) {
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, 
+      builder: (context) => AddTask(),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomNavigationBar: BottomBar(),
+
         body: Padding(
-            padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-            child: getEventCalendar(_events, onCalendarTapped)));
+            padding: const EdgeInsets.fromLTRB(5, 40, 5, 5),
+            child: getEventCalendar(_events, onCalendarTapped)
+        ),
+        floatingActionButton: Container(
+          height: 70.0,
+          width: 70.0,
+          child: FloatingActionButton(
+            foregroundColor: Theme.of(context).colorScheme.onSecondary, 
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            shape: const CircleBorder(),
+            onPressed: () => _addObject(context),
+            child: const Icon(Icons.add_outlined),
+          ),
+        ),
+        bottomNavigationBar: null,
+        bottomSheet: BottomBar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
   }
 
   SfCalendar getEventCalendar(
@@ -90,7 +125,18 @@ class EventCalendarState extends State<EventCalendar> {
               calendarAppointmentDetails.appointments.first;
           return Container(
             color: meeting.background.withOpacity(0.8),
-            child: Text(meeting.eventName),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                meeting.eventName,
+                textAlign: TextAlign.center,
+                style: 
+                GoogleFonts.openSans(
+                  color: Colors.white,
+                  fontSize: 10,
+                ),
+              ),
+            ),
           );
         },
         initialDisplayDate: DateTime(DateTime.now().year, DateTime.now().month,
@@ -178,7 +224,7 @@ class EventCalendarState extends State<EventCalendar> {
     _colorCollection.add(const Color(0xFF3D4FB5));
     _colorCollection.add(const Color(0xFFE47C73));
     _colorCollection.add(const Color(0xFF636363));
-    _colorCollection.add(const Color.fromARGB(255, 255, 243, 176));
+    _colorCollection.add(const Color.fromARGB(255, 255, 196, 35));
     _colorCollection.add(const Color.fromARGB(1, 129, 129, 129));
 
     _colorNames = <String>[];
@@ -191,7 +237,7 @@ class EventCalendarState extends State<EventCalendar> {
     _colorNames.add('Blue');
     _colorNames.add('Peach');
     _colorNames.add('Gray');
-    _colorNames.add('Pale Yellow');
+    _colorNames.add('Pale green');
     _colorNames.add('translucent gray');
 
     _timeZoneCollection = <String>[];
