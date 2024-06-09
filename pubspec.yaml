@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.18.1
+  syncfusion_flutter_calendar: ^25.1.39
 
 dev_dependencies:
   flutter_test:
