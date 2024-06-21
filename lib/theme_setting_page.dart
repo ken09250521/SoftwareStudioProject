@@ -1,17 +1,16 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'bottom_bar.dart';
 import 'themes.dart';
 import 'package:provider/provider.dart';
 
-var curTheme = blueLightTheme;
+var curTheme = keroroLightTheme;
 bool switched = false;
 int lastPage = 0;
 
 class ThemeModel extends ChangeNotifier {
-  ThemeData _currentTheme = blueLightTheme;
+  ThemeData _currentTheme = keroroLightTheme;
 
   ThemeData get currentTheme => _currentTheme;
 
@@ -21,12 +20,16 @@ class ThemeModel extends ChangeNotifier {
   }
 }
 
-final blueLightTheme = ThemeData.from(colorScheme: blueLightColorScheme);
-final blueDarkTheme = ThemeData.from(colorScheme: blueDarkColorScheme);
-final waiLightTheme = ThemeData.from(colorScheme: waiLightColorScheme);
-final waiDarkTheme = ThemeData.from(colorScheme: waiDarkColorScheme);
-final mandyLightTheme = ThemeData.from(colorScheme: mandyLightColorScheme);
-final mandyDarkTheme = ThemeData.from(colorScheme: mandyDarkColorScheme);
+final keroroLightTheme = ThemeData.from(colorScheme: keroroLightColorScheme);
+final keroroDarkTheme = ThemeData.from(colorScheme: keroroDarkColorScheme);
+final giroroLightTheme = ThemeData.from(colorScheme: giroroLightColorScheme);
+final giroroDarkTheme = ThemeData.from(colorScheme: giroroDarkColorScheme);
+final dororoLightTheme = ThemeData.from(colorScheme: dororoLightColorScheme);
+final dororoDarkTheme = ThemeData.from(colorScheme: dororoDarkColorScheme);
+final kururuLightTheme = ThemeData.from(colorScheme: kururuLightColorScheme);
+final kururuDarkTheme = ThemeData.from(colorScheme: kururuDarkColorScheme);
+final tamamaLightTheme = ThemeData.from(colorScheme: tamamaLightColorScheme);
+final tamamaDarkTheme = ThemeData.from(colorScheme: tamamaDarkColorScheme);
 
 class ThemePage extends StatefulWidget{
   const ThemePage({super.key});
@@ -57,22 +60,34 @@ class _ThemePageState extends State<ThemePage> {
               setState(() {
                 switched = value;
                 if (theme == 0 && switched == false) {
-                  context.read<ThemeModel>().changeTheme(blueLightTheme);
+                  context.read<ThemeModel>().changeTheme(keroroLightTheme);
                 }
                 if (theme == 0 && switched == true) {
-                  context.read<ThemeModel>().changeTheme(blueDarkTheme);
+                  context.read<ThemeModel>().changeTheme(keroroDarkTheme);
                 }
                 if (theme == 1 && switched == false) {
-                  context.read<ThemeModel>().changeTheme(waiLightTheme);
+                  context.read<ThemeModel>().changeTheme(giroroLightTheme);
                 }
                 if (theme == 1 && switched == true) {
-                  context.read<ThemeModel>().changeTheme(waiDarkTheme);
+                  context.read<ThemeModel>().changeTheme(giroroDarkTheme);
                 }
                 if (theme == 2 && switched == false){
-                  context.read<ThemeModel>().changeTheme(mandyLightTheme);
+                  context.read<ThemeModel>().changeTheme(dororoLightTheme);
                 }
                 if (theme == 2 && switched == true){
-                  context.read<ThemeModel>().changeTheme(mandyDarkTheme);
+                  context.read<ThemeModel>().changeTheme(dororoDarkTheme);
+                }
+                if (theme == 3 && switched == false){
+                  context.read<ThemeModel>().changeTheme(kururuLightTheme);
+                }
+                if (theme == 3 && switched == true){
+                  context.read<ThemeModel>().changeTheme(kururuDarkTheme);
+                }
+                if (theme == 4 && switched == false){
+                  context.read<ThemeModel>().changeTheme(tamamaLightTheme);
+                }
+                if (theme == 4 && switched == true){
+                  context.read<ThemeModel>().changeTheme(tamamaDarkTheme);
                 }
               });
             },
@@ -83,22 +98,34 @@ class _ThemePageState extends State<ThemePage> {
         onPageChanged: (theme) {
           lastPage = theme;
           if (theme == 0 && switched == false) {
-            context.read<ThemeModel>().changeTheme(blueLightTheme);
+            context.read<ThemeModel>().changeTheme(keroroLightTheme);
           }
           if (theme == 0 && switched == true) {
-            context.read<ThemeModel>().changeTheme(blueDarkTheme);
+            context.read<ThemeModel>().changeTheme(keroroDarkTheme);
           }
           if (theme == 1 && switched == false) {
-            context.read<ThemeModel>().changeTheme(waiLightTheme);
+            context.read<ThemeModel>().changeTheme(giroroLightTheme);
           }
           if (theme == 1 && switched == true) {
-            context.read<ThemeModel>().changeTheme(waiDarkTheme);
+            context.read<ThemeModel>().changeTheme(giroroDarkTheme);
           }
           if (theme == 2 && switched == false){
-            context.read<ThemeModel>().changeTheme(mandyLightTheme);
+            context.read<ThemeModel>().changeTheme(dororoLightTheme);
           }
           if (theme == 2 && switched == true){
-            context.read<ThemeModel>().changeTheme(mandyDarkTheme);
+            context.read<ThemeModel>().changeTheme(dororoDarkTheme);
+          }
+          if (theme == 3 && switched == false){
+            context.read<ThemeModel>().changeTheme(kururuLightTheme);
+          }
+          if (theme == 3 && switched == true){
+            context.read<ThemeModel>().changeTheme(kururuDarkTheme);
+          }
+          if (theme == 4 && switched == false){
+            context.read<ThemeModel>().changeTheme(tamamaLightTheme);
+          }
+          if (theme == 4 && switched == true){
+            context.read<ThemeModel>().changeTheme(tamamaDarkTheme);
           }
         },
         children:  <Widget>[
@@ -118,7 +145,7 @@ class _ThemePageState extends State<ThemePage> {
                   icon: const Icon(Icons.arrow_back_ios)
                 ),
                 Text(
-                  'Blue Chill',
+                  'Keroro',
                   style: GoogleFonts.openSans(),
                 ),
                 IconButton(
@@ -151,7 +178,7 @@ class _ThemePageState extends State<ThemePage> {
                   icon: const Icon(Icons.arrow_back_ios)
                 ),
                 Text(
-                  'Waikawa Gray',
+                  'Giroro',
                   style: GoogleFonts.openSans(),
                 ),
                 IconButton(
@@ -184,7 +211,73 @@ class _ThemePageState extends State<ThemePage> {
                   icon: const Icon(Icons.arrow_back_ios)
                 ),
                 Text(
-                  'Mandy',
+                  'Dororo',
+                  style: GoogleFonts.openSans(),
+                ),
+                IconButton(
+                  onPressed: (){
+                    if (_pageViewController.hasClients){
+                      _pageViewController.nextPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  icon: const Icon(Icons.arrow_forward_ios)
+                ),
+              ],
+            )
+          ),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  onPressed: (){
+                    if (_pageViewController.hasClients){
+                      _pageViewController.previousPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  icon: const Icon(Icons.arrow_back_ios)
+                ),
+                Text(
+                  'Kururu',
+                  style: GoogleFonts.openSans(),
+                ),
+                IconButton(
+                  onPressed: (){
+                    if (_pageViewController.hasClients){
+                      _pageViewController.nextPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  icon: const Icon(Icons.arrow_forward_ios)
+                ),
+              ],
+            )
+          ),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  onPressed: (){
+                    if (_pageViewController.hasClients){
+                      _pageViewController.previousPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  icon: const Icon(Icons.arrow_back_ios)
+                ),
+                Text(
+                  'Tamama',
                   style: GoogleFonts.openSans(),
                 ),
                 IconButton(

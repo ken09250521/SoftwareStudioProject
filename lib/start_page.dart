@@ -21,20 +21,20 @@ class StartPage extends StatelessWidget {
               Text(
                 'Schedool',
                 style: GoogleFonts.openSans(
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
               ),
               Text(
                 'Time Manage Your Life',
                 style: GoogleFonts.openSans(
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                     fontSize: 25,
                     
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondaryContainer,
                   ),
                 ),
               ),
@@ -47,8 +47,8 @@ class StartPage extends StatelessWidget {
                   );
                 }, 
                 style: TextButton.styleFrom(
-                  foregroundColor: Colors.white, // 按鈕文本顏色
-                  backgroundColor: Color.fromARGB(255, 0, 114, 149), // 按鈕背景顏色
+                  foregroundColor: Theme.of(context).colorScheme.secondary, // 按鈕文本顏色
+                  backgroundColor: Theme.of(context).colorScheme.onSecondary, // 按鈕背景顏色
                   textStyle: const TextStyle(fontSize: 20), // 按鈕文字大小
                 ),
                 child: const Text('Start!'),

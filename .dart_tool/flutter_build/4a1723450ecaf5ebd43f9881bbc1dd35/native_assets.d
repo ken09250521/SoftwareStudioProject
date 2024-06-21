@@ -1,0 +1,1 @@
+ /Users/kaivzkekn/Desktop/SDLab/Soft/clone/SoftwareStudioProject/.dart_tool/flutter_build/4a1723450ecaf5ebd43f9881bbc1dd35/native_assets.yaml: 

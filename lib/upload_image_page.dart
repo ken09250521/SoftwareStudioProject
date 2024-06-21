@@ -1,6 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:soft_studio_project/main.dart';
+import 'page_control.dart';
 
 class UploadImagePage extends StatefulWidget {
   const UploadImagePage({super.key});
@@ -28,7 +28,6 @@ class _UploadImagePageState extends State<UploadImagePage> {
         for(var file in result.files){
           fileNames.add(file.name);
           fileSize.add(file.size);
-          print(file.name);
         }
       });
 
@@ -103,7 +102,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EventCalendar()),
+                    MaterialPageRoute(builder: (context) => const PageControl()),
                   );
                 },
                 child: const Text('Next'),
