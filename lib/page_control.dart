@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'calendar_page.dart';
@@ -30,51 +31,53 @@ class _PageControlState extends State<PageControl> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: FlashyTabBar(
-        animationCurve: Curves.linear,
-        selectedIndex: _selectedIndex,
-        iconSize: 30,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        showElevation: false,
-        onItemSelected: (index) => setState(() {
-          _selectedIndex = index;
-        }),
-        items: [
-          FlashyTabBarItem(
-            icon: const Icon(LineAwesomeIcons.list_alt_solid),
-            title: const Text('Task List'),
-            activeColor: Theme.of(context).colorScheme.onPrimary,
-            inactiveColor: Theme.of(context).colorScheme.inversePrimary,
-          ),
-          FlashyTabBarItem(
-            icon: const Icon(LineAwesomeIcons.comment_solid),
-            title: const Text('Ask AI'),
-            activeColor: Theme.of(context).colorScheme.onPrimary,
-            inactiveColor: Theme.of(context).colorScheme.inversePrimary,
-          ),
-          FlashyTabBarItem(
-            icon: const Icon(LineAwesomeIcons.calendar_solid),
-            title: const Text('Schedule'),
-            activeColor: Theme.of(context).colorScheme.onPrimary,
-            inactiveColor: Theme.of(context).colorScheme.inversePrimary,
-          ),
-          FlashyTabBarItem(
-            icon: const Icon(LineAwesomeIcons.random_solid),
-            title: const Text('Random Task'),
-            activeColor: Theme.of(context).colorScheme.onPrimary,
-            inactiveColor: Theme.of(context).colorScheme.inversePrimary,
-          ),
-          FlashyTabBarItem(
-            icon: const Icon(LineAwesomeIcons.user_circle),
-            title: const Text('Profile'),
-            activeColor: Theme.of(context).colorScheme.onPrimary,
-            inactiveColor: Theme.of(context).colorScheme.inversePrimary,
-          ),
-        ],
-
-      )
+    return SafeArea(
+      child: Scaffold(
+        body: _pages[_selectedIndex],
+        bottomNavigationBar: FlashyTabBar(
+          animationCurve: Curves.linear,
+          selectedIndex: _selectedIndex,
+          iconSize: 30,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          showElevation: false,
+          onItemSelected: (index) => setState(() {
+            _selectedIndex = index;
+          }),
+          items: [
+            FlashyTabBarItem(
+              icon: const Icon(LineAwesomeIcons.list_alt_solid),
+              title: const Text('Task List'),
+              activeColor: Theme.of(context).colorScheme.onPrimary,
+              inactiveColor: Theme.of(context).colorScheme.inversePrimary,
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(LineAwesomeIcons.comment_solid),
+              title: const Text('Ask AI'),
+              activeColor: Theme.of(context).colorScheme.onPrimary,
+              inactiveColor: Theme.of(context).colorScheme.inversePrimary,
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(LineAwesomeIcons.calendar_solid),
+              title: const Text('Schedule'),
+              activeColor: Theme.of(context).colorScheme.onPrimary,
+              inactiveColor: Theme.of(context).colorScheme.inversePrimary,
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(LineAwesomeIcons.random_solid),
+              title: const Text('Random Task'),
+              activeColor: Theme.of(context).colorScheme.onPrimary,
+              inactiveColor: Theme.of(context).colorScheme.inversePrimary,
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(LineAwesomeIcons.user_circle),
+              title: const Text('Profile'),
+              activeColor: Theme.of(context).colorScheme.onPrimary,
+              inactiveColor: Theme.of(context).colorScheme.inversePrimary,
+            ),
+          ],
+      
+        )
+      ),
     );
   }
 }

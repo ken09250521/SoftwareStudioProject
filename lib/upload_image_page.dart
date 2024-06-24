@@ -5,6 +5,13 @@ import 'page_control.dart';
 import 'package:camera/camera.dart';
 
 enum Menu {file, camera}
+class SubjectInfos{
+  SubjectInfos({required this.files, required this.subjectName, required this.fileNums});
+
+  String subjectName;
+  List<PlatformFile> files;
+  int fileNums;
+}
 
 class UploadImagePage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -15,12 +22,9 @@ class UploadImagePage extends StatefulWidget {
 }
 
 class _UploadImagePageState extends State<UploadImagePage> {
-  List<PlatformFile> files = [];
-  List<String> fileNames = [];
-  List<int> fileSize = [];
-  bool isFile = false; 
+  List<SubjectInfos> syllabus = [];
 
-  
+  final subjectController = TextEditingController();
 
   void _pickFile() async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -30,11 +34,11 @@ class _UploadImagePageState extends State<UploadImagePage> {
 
     if (result != null) {
       setState(() {
-        files.addAll(result.files);
-        for(var file in result.files){
-          fileNames.add(file.name);
-          fileSize.add(file.size);
-        }
+        syllabus.add(SubjectInfos(
+          files: result.files, 
+          subjectName: subjectController.text, 
+          fileNums: result.count
+        ));
       });
 
     } else {
@@ -44,9 +48,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
 
   void _discardFile(int index){
     setState(() {
-      files.removeAt(index);
-      fileNames.removeAt(index);
-      fileSize.removeAt(index);
+      syllabus.removeAt(index);
     });
   }
 
@@ -61,36 +63,62 @@ class _UploadImagePageState extends State<UploadImagePage> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: files.length,
+              itemCount: syllabus.length,
               itemBuilder: (BuildContext context, int index){
                 return Container(
-                  color: Theme.of(context).primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: Column(
                     children: [
-                      Text(
-                        '${fileNames[index]}',
-                        textAlign: TextAlign.start,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '  ${syllabus[index].subjectName}',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '${fileSize[index]} byte',
-                        textAlign: TextAlign.end,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
+                        Text(
+                          '${syllabus[index].fileNums} files uploaded',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () => _discardFile(index), 
-                        icon: const Icon(Icons.delete),
-                        color: Colors.white,
-                      ),
-                    ],
+                        IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Do you want to delete the syllabus?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Yes'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            _discardFile(index);
+                          }, 
+                          icon: const Icon(Icons.delete),
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10,)
+                  ]
                   ),
                 );
               }
@@ -107,15 +135,58 @@ class _UploadImagePageState extends State<UploadImagePage> {
                         ),
                 icon: const Icon(Icons.add),
                 onSelected: (Menu item) {
-                  (item == Menu.camera)
-                    ? (){
-                      print(item);
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context)=>UploadImagePage(cameras: widget.cameras)),
-                      );
-                    }
-                    : _pickFile;
+                  if(item == Menu.camera){
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('What subject?'),
+                          content: TextField(
+                            controller: subjectController,
+                            decoration: const InputDecoration(
+                              labelText: 'subject name',
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                  context, 
+                                  MaterialPageRoute(builder: (context)=>CapturePage(cameras: widget.cameras)),
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('What subject?'),
+                          content: TextField(
+                            controller: subjectController,
+                            decoration: const InputDecoration(
+                              labelText: 'subject name',
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                _pickFile();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
                   const PopupMenuItem<Menu>(
@@ -147,10 +218,8 @@ class _UploadImagePageState extends State<UploadImagePage> {
               const SizedBox(height: 50),
             ],
           ),
-          
         ],
       ),
-      
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:external_path/external_path.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:media_scanner/media_scanner.dart';
+import 'package:soft_studio_project/upload_image_page.dart';
 
 class CapturePage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -16,7 +17,7 @@ class CapturePage extends StatefulWidget {
 
 class _CapturePageState extends State<CapturePage> {
   late CameraController cameraController;
-  late Future<void> cameraValue;
+  late Future<void> cameraValue; 
   List<File> imagesList = [];
   bool isFlashOn = false;
   bool isRearCamera = true;
@@ -62,6 +63,8 @@ class _CapturePageState extends State<CapturePage> {
       imagesList.add(file);
     });
     MediaScanner.loadMedia(path: file.path);
+
+    
   }
 
   void startCamera(int camera) {
@@ -125,72 +128,87 @@ class _CapturePageState extends State<CapturePage> {
             },
           ),
           SafeArea(
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 5, top: 10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isFlashOn = !isFlashOn;
-                        });
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(50, 0, 0, 0),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: isFlashOn
-                              ? const Icon(
-                                  Icons.flash_on,
-                                  color: Colors.white,
-                                  size: 30,
-                                )
-                              : const Icon(
-                                  Icons.flash_off,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                        ),
-                      ),
-                    ),
-                    const Gap(10),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isRearCamera = !isRearCamera;
-                        });
-                        isRearCamera ? startCamera(0) : startCamera(1);
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(50, 0, 0, 0),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: isRearCamera
-                              ? const Icon(
-                                  Icons.camera_rear,
-                                  color: Colors.white,
-                                  size: 30,
-                                )
-                              : const Icon(
-                                  Icons.camera_front,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
+            child: Column(
+              children: [
+                Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 5, top: 10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isFlashOn = !isFlashOn;
+                          });
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(50, 0, 0, 0),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: isFlashOn
+                                ? const Icon(
+                                    Icons.flash_on,
+                                    color: Colors.white,
+                                    size: 30,
+                                  )
+                                : const Icon(
+                                    Icons.flash_off,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                          ),
                         ),
                       ),
-                    )
-                  ],
+                      const Gap(10),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isRearCamera = !isRearCamera;
+                          });
+                          isRearCamera ? startCamera(0) : startCamera(1);
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(50, 0, 0, 0),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: isRearCamera
+                                ? const Icon(
+                                    Icons.camera_rear,
+                                    color: Colors.white,
+                                    size: 30,
+                                  )
+                                : const Icon(
+                                    Icons.camera_front,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).primaryColor,
+                ),
+                onPressed: () {
+                  
+                  Navigator.pop(context);
+                }, 
+                child: const Text('Done')
+              )
+            ]
             ),
           ),
           Align(
