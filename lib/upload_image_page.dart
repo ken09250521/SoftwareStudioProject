@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:soft_studio_project/capture_page.dart';
@@ -6,10 +8,11 @@ import 'package:camera/camera.dart';
 
 enum Menu {file, camera}
 class SubjectInfos{
-  SubjectInfos({required this.files, required this.subjectName, required this.fileNums});
+  SubjectInfos({imagedirectories, files, required this.subjectName, required this.fileNums});
 
   String subjectName;
-  List<PlatformFile> files;
+  List<PlatformFile> files=[]; // for files
+  List<String> imageDirectories = []; // for images
   int fileNums;
 }
 
@@ -22,14 +25,14 @@ class UploadImagePage extends StatefulWidget {
 }
 
 class _UploadImagePageState extends State<UploadImagePage> {
-  List<SubjectInfos> syllabus = [];
+  List<SubjectInfos> syllabus = []; //for files
+  List<String> filesDirectory = []; //for images
 
   final subjectController = TextEditingController();
 
   void _pickFile() async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
-      // allowedExtensions: ['jpg', 'jpeg', 'png'], //dont know why adding this and the file manager
     );
 
     if (result != null) {
@@ -50,6 +53,21 @@ class _UploadImagePageState extends State<UploadImagePage> {
     setState(() {
       syllabus.removeAt(index);
     });
+  }
+
+  void _openCamera() async {
+    List<String> filesDirectory = await Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context)=>CapturePage(cameras: widget.cameras)),
+    );
+    print('[DEBUG] filesDirectory: ${filesDirectory.first}');
+    syllabus.add(
+      SubjectInfos(
+        subjectName: subjectController.text, 
+        fileNums: filesDirectory.length, 
+        imagedirectories: filesDirectory
+      )
+    );
   }
 
   @override
@@ -73,10 +91,10 @@ class _UploadImagePageState extends State<UploadImagePage> {
                   child: Column(
                     children: [
                       Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          '  ${syllabus[index].subjectName}',
+                          '${syllabus[index].subjectName}',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 24,
@@ -84,6 +102,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        SizedBox(width: 50,),
                         Text(
                           '${syllabus[index].fileNums} files uploaded',
                           textAlign: TextAlign.end,
@@ -101,23 +120,22 @@ class _UploadImagePageState extends State<UploadImagePage> {
                                   title: const Text('Do you want to delete the syllabus?'),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: const Text('Yes'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
+                                    child: const Text('Yes'),
+                                    onPressed: () {
+                                      _discardFile(index);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
                                   ],
                                 );
                               },
                             );
-                            _discardFile(index);
                           }, 
                           icon: const Icon(Icons.delete),
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10,)
                   ]
                   ),
                 );
@@ -152,10 +170,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
                               child: const Text('OK'),
                               onPressed: () {
                                 Navigator.of(context).pop();
-                                Navigator.push(
-                                  context, 
-                                  MaterialPageRoute(builder: (context)=>CapturePage(cameras: widget.cameras)),
-                                );
+                                _openCamera();
                               },
                             ),
                           ],

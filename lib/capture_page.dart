@@ -22,6 +22,8 @@ class _CapturePageState extends State<CapturePage> {
   bool isFlashOn = false;
   bool isRearCamera = true;
 
+  List<String> imageDirectories = [];
+
   Future<File> saveImage(XFile image) async {
     final downlaodPath = await ExternalPath.getExternalStoragePublicDirectory(
         ExternalPath.DIRECTORY_DOWNLOADS);
@@ -33,6 +35,8 @@ class _CapturePageState extends State<CapturePage> {
     } catch (e) {
       print("failed");
     }
+
+    imageDirectories.add('$downlaodPath/$fileName');
 
     return file;
   }
@@ -203,8 +207,7 @@ class _CapturePageState extends State<CapturePage> {
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
-                  
-                  Navigator.pop(context);
+                  Navigator.pop(context, imageDirectories);
                 }, 
                 child: const Text('Done')
               )
