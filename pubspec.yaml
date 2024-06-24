@@ -20,6 +20,10 @@ dependencies:
   flashy_tab_bar2: ^0.0.10
   line_awesome_flutter: ^3.0.1
   get: ^4.6.6
+  camera: ^0.10.5+9
+  gap: ^3.0.1
+  external_path: ^1.0.3
+  media_scanner: ^2.1.0
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,14 @@
 # This is a generated file; do not edit or check into version control.
-file_picker=/Users/kaivzkekn/.pub-cache/hosted/pub.dev/file_picker-8.0.0+1/
-flutter_plugin_android_lifecycle=/Users/kaivzkekn/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.18/
-path_provider=/Users/kaivzkekn/.pub-cache/hosted/pub.dev/path_provider-2.1.3/
-path_provider_android=/Users/kaivzkekn/.pub-cache/hosted/pub.dev/path_provider_android-2.2.3/
-path_provider_foundation=/Users/kaivzkekn/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2/
-path_provider_linux=/Users/kaivzkekn/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
-path_provider_windows=/Users/kaivzkekn/.pub-cache/hosted/pub.dev/path_provider_windows-2.2.1/
+camera=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\camera-0.10.6\\
+camera_android=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\camera_android-0.10.9+6\\
+camera_avfoundation=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\camera_avfoundation-0.9.16\\
+camera_web=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\camera_web-0.3.3\\
+external_path=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\external_path-1.0.3\\
+file_picker=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\file_picker-8.0.0+1\\
+flutter_plugin_android_lifecycle=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\flutter_plugin_android_lifecycle-2.0.18\\
+media_scanner=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\media_scanner-2.1.0\\
+path_provider=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider-2.1.3\\
+path_provider_android=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_android-2.2.3\\
+path_provider_foundation=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_foundation-2.3.2\\
+path_provider_linux=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_linux-2.2.1\\
+path_provider_windows=C:\\Users\\Hanksome\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_windows-2.2.1\\

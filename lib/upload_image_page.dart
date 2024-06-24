@@ -1,9 +1,14 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:soft_studio_project/capture_page.dart';
 import 'page_control.dart';
+import 'package:camera/camera.dart';
+
+enum Menu {file, camera}
 
 class UploadImagePage extends StatefulWidget {
-  const UploadImagePage({super.key});
+  final List<CameraDescription> cameras;
+  const UploadImagePage({super.key, required this.cameras});
 
   @override
   State<UploadImagePage> createState() => _UploadImagePageState();
@@ -15,6 +20,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
   List<int> fileSize = [];
   bool isFile = false; 
 
+  
 
   void _pickFile() async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -93,9 +99,40 @@ class _UploadImagePageState extends State<UploadImagePage> {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconButton(
-                onPressed: _pickFile, 
-                icon: const Icon(Icons.add)
+              PopupMenuButton<Menu>(
+                position: PopupMenuPosition.over,
+                popUpAnimationStyle: AnimationStyle(
+                          curve: Easing.emphasizedDecelerate,
+                          duration: const Duration(seconds: 1),
+                        ),
+                icon: const Icon(Icons.add),
+                onSelected: (Menu item) {
+                  (item == Menu.camera)
+                    ? (){
+                      print(item);
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context)=>UploadImagePage(cameras: widget.cameras)),
+                      );
+                    }
+                    : _pickFile;
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+                  const PopupMenuItem<Menu>(
+                    value: Menu.camera,
+                    child: ListTile(
+                      leading: Icon(Icons.camera_alt),
+                      title: Text('Camera'),
+                    ),
+                  ),
+                  const PopupMenuItem<Menu>(
+                    value: Menu.file,
+                    child: ListTile(
+                      leading: Icon(Icons.file_copy_rounded),
+                      title: Text('File'),
+                    ),
+                  ),
+                ]
               ),
               const SizedBox(height: 10,),
               ElevatedButton(

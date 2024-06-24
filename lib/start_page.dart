@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'upload_image_page.dart';
 import 'theme_setting_page.dart';
-
+import 'package:camera/camera.dart';
+import 'upload_image_page.dart';
 
 class StartPage extends StatelessWidget {
-  const StartPage({super.key});
+  // const StartPage({super.key});
+  final List<CameraDescription> cameras;
+  const StartPage({super.key, required this.cameras});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class StartPage extends StatelessWidget {
                 onPressed: (){
                   Navigator.push(
                     context, 
-                    MaterialPageRoute(builder: (context)=>UploadImagePage()),
+                    MaterialPageRoute(builder: (context)=>UploadImagePage(cameras: cameras)),
                   );
                 }, 
                 style: TextButton.styleFrom(
