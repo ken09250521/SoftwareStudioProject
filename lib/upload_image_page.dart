@@ -43,7 +43,6 @@ class _UploadImagePageState extends State<UploadImagePage> {
           fileNums: result.count
         ));
       });
-
     } else {
       // User canceled the picker
     }
@@ -61,13 +60,15 @@ class _UploadImagePageState extends State<UploadImagePage> {
       MaterialPageRoute(builder: (context)=>CapturePage(cameras: widget.cameras)),
     );
     print('[DEBUG] filesDirectory: ${filesDirectory.first}');
-    syllabus.add(
-      SubjectInfos(
-        subjectName: subjectController.text, 
-        fileNums: filesDirectory.length, 
-        imagedirectories: filesDirectory
-      )
-    );
+    setState(() {
+      syllabus.add(
+        SubjectInfos(
+          subjectName: subjectController.text, 
+          fileNums: filesDirectory.length,
+          imagedirectories: filesDirectory
+        )
+      );
+    });
   }
 
   @override
