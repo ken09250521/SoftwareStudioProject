@@ -31,6 +31,9 @@ class _CalendarPageState extends State<CalendarPage> {
   UrgencyLevel dropdownValue = UrgencyLevel.Low;
   DateTime selectedDate = DateTime.now();
 
+  List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+
   final CalendarController<Event> calendarController = CalendarController(
     calendarDateTimeRange: DateTimeRange(
       start: DateTime(DateTime.now().year - 1),
@@ -87,51 +90,58 @@ class _CalendarPageState extends State<CalendarPage> {
                 style: TextStyle(fontSize: 24)),
                 const Divider(
                   color: Colors.grey,
-                  height: 20,
+                  height: 10,
                   thickness: 1,
                   indent: 20,
                   endIndent: 20,
                 ),
-                TextField(
-                  controller: titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Title',
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: titleController,
+                        decoration: const InputDecoration(
+                          labelText: 'Task Title',
+                        ),
+                      ),
+                      TextField(
+                        controller: detailsController,
+                        decoration: const InputDecoration(
+                          labelText: "Task Details",
+                        ),
+                      ),
+                      ElevatedButton(
+                        child: const Text('Select Date'),
+                        onPressed: () => _selectDate(context),
+                      ),
+                      DropdownButton(
+                        value: dropdownValue,
+                        onChanged: (UrgencyLevel? newValue) {
+                          if (newValue != null) {
+                            setState((){
+                              dropdownValue = newValue;
+                            });
+                          }
+                        },
+                        items: UrgencyLevel.values.map<DropdownMenuItem<UrgencyLevel>>((UrgencyLevel value) {
+                          return DropdownMenuItem<UrgencyLevel>(
+                            value: value,
+                            child: Text(value.toString().split('.').last),
+                          );
+                        }).toList(),
+                      ),
+                      ElevatedButton(
+                        child: const Text('Confirm'),
+                        onPressed: () {
+                          _addToTaskList(titleController.text, detailsController.text, selectedDate, dropdownValue);
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
                   ),
                 ),
-                TextField(
-                  controller: detailsController,
-                  decoration: const InputDecoration(
-                    labelText: "Task Details",
-                  ),
-                ),
-                ElevatedButton(
-                  child: const Text('Select Date'),
-                  onPressed: () => _selectDate(context),
-                ),
-                DropdownButton(
-                  value: dropdownValue,
-                  onChanged: (UrgencyLevel? newValue) {
-                    if (newValue != null) {
-                      setState((){
-                        dropdownValue = newValue;
-                      });
-                    }
-                  },
-                  items: UrgencyLevel.values.map<DropdownMenuItem<UrgencyLevel>>((UrgencyLevel value) {
-                    return DropdownMenuItem<UrgencyLevel>(
-                      value: value,
-                      child: Text(value.toString().split('.').last),
-                    );
-                  }).toList(),
-                ),
-                ElevatedButton(
-                  child: const Text('Confirm'),
-                  onPressed: () {
-                    _addToTaskList(titleController.text, detailsController.text, selectedDate, dropdownValue);
-                    Navigator.of(context).pop();
-                  },
-                )
-              ]          )
+              ]
+            )
           ),
         );
       });
@@ -164,6 +174,9 @@ class _CalendarPageState extends State<CalendarPage> {
     );
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('${months.elementAt(DateTime.now().month-1)}'),
+      ),
       body: calendar,
       floatingActionButton: FloatingActionButton(
         onPressed: _addNewEvent,

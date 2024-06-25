@@ -201,16 +201,6 @@ class _CapturePageState extends State<CapturePage> {
                   ),
                 ),
               ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {
-                  Navigator.pop(context, imageDirectories);
-                }, 
-                child: const Text('Done')
-              )
             ]
             ),
           ),
@@ -256,6 +246,19 @@ class _CapturePageState extends State<CapturePage> {
               ],
             ),
           ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context, imageDirectories);
+              }, 
+              child: const Text('Done')
+            ),
+          )
         ],
       ),
     );
